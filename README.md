@@ -50,3 +50,11 @@ npm run dev
 
 The app is now running on `http://localhost:3000`
 
+
+Alternatively, use the `Makefile` commands
+
+```
+make run-client # runs the client
+make run-server # runs the server
+make run # runs # runs both
+```
