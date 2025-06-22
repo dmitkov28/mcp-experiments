@@ -11,16 +11,19 @@ type Message = {
 
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const query = new FormData(e.target as HTMLFormElement).get(
       "query"
     ) as string;
     (e.target as HTMLFormElement).reset();
     setMessages((prev) => [...prev, { author: "user", text: query }]);
-    
+
     const response = await processQuery(query);
+    setIsLoading(false)
     setMessages((prev) => [...prev, { author: "ai", text: response }]);
   };
 
@@ -35,6 +38,9 @@ export default function Chat() {
           }
           return null;
         })}
+        {isLoading &&
+          <span>...</span>
+        }
       </div>
       <div className="flex-none p-4">
         <form onSubmit={handleSubmit} className="flex items-center">
